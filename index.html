@@ -1,4 +1,384 @@
-git add index.html README.md
-git commit -m "enhanced project showcase site and added README"
-git push origin main
-<h1>Hello from production!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Siddharth Patra — Projects</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0b0f14;
+      --surface:  #131920;
+      --border:   #1e2a35;
+      --accent:   #00c896;
+      --accent2:  #0ea5e9;
+      --text:     #e4eaf0;
+      --muted:    #6b7f8f;
+      --mono:     'JetBrains Mono', monospace;
+      --sans:     'Space Grotesk', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(11,15,20,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      padding: 100px 48px 80px;
+      max-width: 860px;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .hero h1 span {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+    .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+    .badge {
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--muted);
+    }
+
+    /* DIVIDER */
+    .section-label {
+      padding: 0 48px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .section-label span {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* PROJECTS GRID */
+    .projects {
+      padding: 0 48px 80px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      transition: border-color .2s, transform .2s;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .card:hover { border-color: #2e3f50; transform: translateY(-2px); }
+    .card:hover::before { opacity: 1; }
+
+    .card-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .card-stack { display: flex; gap: 8px; flex-wrap: wrap; }
+    .pill {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 3px 10px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--muted);
+    }
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      transition: gap .2s;
+    }
+    .card-link:hover { gap: 10px; }
+
+    /* DEPLOYMENT SECTION */
+    .deploy-section {
+      margin: 0 48px 80px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 36px;
+    }
+    .deploy-section h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .deploy-section p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .pipeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      gap: 0;
+    }
+    .pipe-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .pipe-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .pipe-box.active { border-color: var(--accent); color: var(--accent); }
+    .pipe-label { font-size: 11px; color: var(--muted); }
+    .pipe-arrow {
+      font-size: 18px;
+      color: var(--border);
+      margin: 0 12px;
+      padding-bottom: 18px;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer span { font-size: 13px; color: var(--muted); font-family: var(--mono); }
+    .footer-link {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-link:hover { color: var(--accent); }
+
+    @media (max-width: 640px) {
+      nav, .hero, .projects, .section-label, .deploy-section, footer {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      .deploy-section { margin-left: 20px; margin-right: 20px; }
+      .pipeline { gap: 8px; }
+      .pipe-arrow { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">siddharth.dev</div>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#deploy">Pipeline</a>
+    <a href="https://github.com/siddharthpatracst2023-17" target="_blank">GitHub ↗</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">// portfolio</div>
+  <h1>Building things<br>with <span>code & curiosity</span></h1>
+  <p>Computer Science student at CST. Here are the projects I've shipped — from static sites to full-stack deployments using Git, hooks, and CI pipelines.</p>
+  <div class="hero-badges">
+    <span class="badge">Git</span>
+    <span class="badge">GitHub</span>
+    <span class="badge">HTML/CSS</span>
+    <span class="badge">macOS</span>
+    <span class="badge">Shell scripting</span>
+  </div>
+</section>
+
+<div class="section-label" id="projects">
+  <span>Projects</span>
+</div>
+
+<div class="projects">
+
+  <div class="card">
+    <div class="card-tag">01 — Deployment</div>
+    <h3>Git Hook Production Pipeline</h3>
+    <p>Automated deployment system using Git bare repositories and post-receive hooks. Push to GitHub, auto-deploy to production — zero manual steps.</p>
+    <div class="card-stack">
+      <span class="pill">Git</span>
+      <span class="pill">Bash</span>
+      <span class="pill">SSH</span>
+      <span class="pill">macOS</span>
+    </div>
+    <a class="card-link" href="https://github.com/siddharthpatracst2023-17/my-site" target="_blank">View on GitHub →</a>
+  </div>
+
+  <div class="card">
+    <div class="card-tag">02 — Web</div>
+    <h3>Project Showcase Site</h3>
+    <p>This site — a fast, responsive static portfolio page. Designed with a dark terminal aesthetic, deployed via the Git hook pipeline above.</p>
+    <div class="card-stack">
+      <span class="pill">HTML</span>
+      <span class="pill">CSS</span>
+      <span class="pill">Google Fonts</span>
+    </div>
+    <a class="card-link" href="#" target="_blank">Live site →</a>
+  </div>
+
+  <div class="card">
+    <div class="card-tag">03 — Coming soon</div>
+    <h3>Next Project</h3>
+    <p>Something new is being built. Check the GitHub profile for the latest commits and work in progress.</p>
+    <div class="card-stack">
+      <span class="pill">TBD</span>
+    </div>
+    <a class="card-link" href="https://github.com/siddharthpatracst2023-17" target="_blank">Follow on GitHub →</a>
+  </div>
+
+</div>
+
+<div class="section-label" id="deploy">
+  <span>Deployment pipeline</span>
+</div>
+
+<div class="deploy-section">
+  <h2>How this site gets deployed</h2>
+  <p>Every git push triggers the full pipeline automatically — no manual steps, no FTP, no drag-and-drop.</p>
+  <div class="pipeline">
+    <div class="pipe-step">
+      <div class="pipe-box active">git push</div>
+      <div class="pipe-label">Local Mac</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-box">GitHub</div>
+      <div class="pipe-label">Remote origin</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-box">post-receive</div>
+      <div class="pipe-label">Git hook fires</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-box active">~/Sites/my-site</div>
+      <div class="pipe-label">Production live</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>© 2026 Siddharth Patra · siddharthpatracst2023-17</span>
+  <a class="footer-link" href="https://github.com/siddharthpatracst2023-17" target="_blank">github.com/siddharthpatracst2023-17</a>
+</footer>
+
+</body>
+</html>
