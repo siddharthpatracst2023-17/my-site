@@ -1,0 +1,7 @@
+# First time only
+git clone https://github.com/siddharthpatracst2023-17/my-site.git
+
+# Every time you push new changes
+cd my-site
+git pull origin main
+<h1>Hello from production!</h1>
