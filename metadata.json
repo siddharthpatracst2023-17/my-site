@@ -1,0 +1,6 @@
+{
+  "name": "Local Taxi Booking and Supplier Hub",
+  "description": "A centralized platform connecting local taxi suppliers, offering live location tracking simulation, supplier rate comparison, and secure card payment processing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

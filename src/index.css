@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;750;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Credit Card 3D Flip Helper Classes */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Custom glow effects for routes on dark map */
+.shadow-glow {
+  filter: drop-shadow(0px 0px 4px currentColor);
+}
+
+/* Dotted grid pattern for elegant dark map */
+.elegant-dots {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 0.5px, transparent 0.5px);
+  background-size: 20px 20px;
+}
+
+/* Stripe signature pattern background simulation */
+.stripe-pattern {
+  background-image: repeating-linear-gradient(45deg, #ccc 0px, #ccc 2px, transparent 2px, transparent 10px);
+}
+
+/* Sleek elegant-scroll design for list elements */
+.elegant-scroll::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.elegant-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+.elegant-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 99px;
+}
+.elegant-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(250, 204, 21, 0.5);
+}
